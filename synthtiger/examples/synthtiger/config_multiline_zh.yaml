@@ -6,6 +6,8 @@ visibility_check: true
 
 # 多行文本生成参数
 element_nums: [3, 10]  # 每个样本中的元素数量范围
+pre_load_json_path: resources/hanzi/hanzi.json
+hanzi_txt_path: resources/hanzi/现代汉语通用字7000.txt
 zaozi:
   method_prob: 0.0           # 使用zaozi渲染的概率，1.0表示总是使用zaozi 0就是原版
   char_types: ['delete', 'add', 'self_swap']  # 支持的字符操作类型

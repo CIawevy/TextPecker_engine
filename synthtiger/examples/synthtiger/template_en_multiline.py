@@ -36,7 +36,7 @@ BLEND_MODES = [
     "darken_only",
     "lighten_only",
 ]
-def save_img( ndarray_img, path='/mnt/bn/ocr-doc-nas/zhuhanshen/project/TextEvaluator/hanzi_writer/synthtiger/examples/synthtiger/debug/temp.png'):
+def save_img(ndarray_img, path=os.path.join(os.path.dirname(__file__), "debug", "temp.png")):
     img = Image.fromarray(ndarray_img)
     img.save(path)
 # 辅助函数
@@ -156,8 +156,8 @@ class SynthTigerEN(templates.Template):
             **config.get("postprocess", {}),
         )
         self.element_nums = config.get("element_nums", [3, 10])
-        self.pre_load_json_path = config.get("pre_load_json_path", '/mnt/bn/ocr-doc-nas/zhuhanshen/project/TextEvaluator/hanzi_writer/hanzi.json')
-        self.hanzi_txt_path = '/mnt/bn/ocr-doc-nas/zhuhanshen/project/TextEvaluator/code/hanzi_statics/现代汉语通用字7000.txt'
+        self.pre_load_json_path = config.get("pre_load_json_path", "resources/hanzi/hanzi.json")
+        self.hanzi_txt_path = config.get("hanzi_txt_path", "resources/hanzi/现代汉语通用字7000.txt")
         with open(self.pre_load_json_path, 'r', encoding='utf-8') as f:
             self.pre_load_data = json.load(f)
         with open(self.hanzi_txt_path, 'r', encoding='utf-8') as f:
@@ -428,7 +428,7 @@ class SynthTigerEN(templates.Template):
                         out = utils.blend_image(temp_element_image, current_bg.copy(), mode=blend_mode)
                         debug_vis = False
                         if debug_vis:
-                            debug_dir = '/mnt/bn/ocr-doc-nas/zhuhanshen/project/TextEvaluator/hanzi_writer/synthtiger/examples/synthtiger/debug'
+                            debug_dir = os.path.join(os.path.dirname(__file__), "debug")
                             os.makedirs(debug_dir, exist_ok=True)
                             # 保存每个尝试的融合结果
                             debug_path = os.path.join(debug_dir, f'debug_try_{blend_mode}.png')
@@ -463,7 +463,7 @@ class SynthTigerEN(templates.Template):
         
         
         if debug:
-            debug_dir = '/mnt/bn/ocr-doc-nas/zhuhanshen/project/TextEvaluator/hanzi_writer/synthtiger/examples/synthtiger/debug'
+            debug_dir = os.path.join(os.path.dirname(__file__), "debug")
             os.makedirs(debug_dir, exist_ok=True)
             timestamp = int(time.time() * 1000)
             

@@ -86,11 +86,14 @@ class ZaoziTextLayer(Layer):
         if np.random.random() < method_prob and stat1: #zaozi模式 若字符无法获取笔画，就正常渲染到模式二
 
             
-            sample_char = random.choice(hanzi_list)
-            while sample_char == char or pre_load_data.get(sample_char,None) is not None:
-                sample_char = random.choice(hanzi_list)
-                
-            self.sample_char_data = pre_load_data.get(sample_char)
+            data_source = pre_load_data or {}
+            sample_chars = [
+                sample_char
+                for sample_char in (hanzi_list or [])
+                if sample_char != char and data_source.get(sample_char) is not None
+            ]
+            sample_char = random.choice(sample_chars) if sample_chars else char
+            self.sample_char_data = data_source.get(sample_char, self.char_data)
         
             image , bbox = self._render_zaozi_text(char,sample_char,size,color)
             super().__init__(image)
